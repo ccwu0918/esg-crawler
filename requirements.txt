@@ -1,0 +1,10 @@
+requests
+bs4
+arrow
+tqdm
+pandas
+pyyaml
+schedule
+fake_useragent
+qdrant-client
+sentence-transformers==2.2.2

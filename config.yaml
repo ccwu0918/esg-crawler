@@ -1,0 +1,16 @@
+WEBSITE:
+  greenhousegas: 
+    articleList: https://mops.twse.com.tw/mops/web/ajax_t152sb01
+    articleDetail: https://mops.twse.com.tw/mops/web/ajax_t152sb01
+DATABASE:
+  MONGO:
+    HOST: 0.0.0.0
+    PORT: 27018
+    USER: admin
+    DB: esg
+    PWD: haztjw345
+    collections:
+      - esg
+  QDRANT:
+    HOST: 0.0.0.0
+    PORT: 6333
