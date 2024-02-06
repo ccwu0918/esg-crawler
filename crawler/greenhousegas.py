@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 from tqdm import tqdm
 
-from .base import BaseCrawler
+from base import BaseCrawler
 
 sys.path.append(str(Path(__file__).absolute().parents[1]))
 
@@ -84,7 +84,8 @@ class GreenhouseGasCrawler(BaseCrawler):
 
 if __name__ == "__main__":
     crawler = GreenhouseGasCrawler(url_name="greenhousegas")
-    crawler.execute(year="109")
-    crawler.execute(year="110")
-    crawler.execute(year="111")
-    crawler.execute(year="112")
+    crawler.execute(year="100")
+    #crawler.execute(year="109")
+    #crawler.execute(year="110")
+    #crawler.execute(year="111")
+    #crawler.execute(year="112")
