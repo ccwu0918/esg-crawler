@@ -20,8 +20,8 @@ class QdrantDBWrapper:
         self.HOST = self.config["QDRANT"]["HOST"]
         self.PORT = self.config["QDRANT"]["PORT"]
         QDRANT_URI = os.environ.get("QDRANT_URI", f"{self.HOST}:{self.PORT}")
-        self.CONNECT_URI = f"http://{QDRANT_URI}"
-        self.client = QdrantClient(url=self.CONNECT_URI)
+        self.CONNECT_URI = f"https://{QDRANT_URI}"
+        self.client = QdrantClient(url=self.CONNECT_URI,  api_key="ebcE2CRagw2mYS-aI3bkUjdqH2Mp5FivMEtXeyd9QZ7myP8B9tY1ZA")
         logger.info(f"CONNECT_URI: {self.CONNECT_URI}")
 
     def use_collection(self, collection_name: str, **kwargs):
