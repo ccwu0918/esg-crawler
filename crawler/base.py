@@ -5,11 +5,11 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from tqdm import tqdm
 from pathlib import Path
+import pandas as pd
 import os
 import time
 import urllib.parse
 import sys
-import pandas as pd
 import numpy as np
 
 sys.path.append(str(Path(__file__).absolute().parents[1]))
@@ -82,9 +82,9 @@ class BaseCrawler:
 
     def document_store(self, data):
         esg_datas = pd.DataFrame(data)      
-        save_data(data=esg_datas, path=f"{self.DATA_DIR}/esg_employee_benefits_datas.csv")
+        save_data(data=esg_datas, path=f"{self.DATA_DIR}/{self.url_name}_datas.csv")
         years = data["year"][0]                        
-        save_data(data=esg_datas, path=f"{self.DATA_DIR}/esg_employee_benefits-{years}_datas.csv")        
+        save_data(data=esg_datas, path=f"{self.DATA_DIR}/{self.url_name}-{years}_datas.csv")        
         datas = {}
         datas["full_text"] = data.apply(
             # lambda row: f'{row["year"]}\n{row["co_id"]}\n{row["content"]}', axis=1
