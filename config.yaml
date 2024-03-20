@@ -1,7 +1,13 @@
 WEBSITE:
+  esg: 
+    articleList: https://mops.twse.com.tw/mops/web/ajax_t152sb01
+    articleDetail: https://mops.twse.com.tw/mops/web/ajax_t152sb01
   greenhousegas: 
     articleList: https://mops.twse.com.tw/mops/web/ajax_t152sb01
     articleDetail: https://mops.twse.com.tw/mops/web/ajax_t152sb01
+  employee_benefits: 
+    articleList: https://mops.twse.com.tw/mops/web/ajax_t152sb01
+    articleDetail: https://mops.twse.com.tw/mops/web/ajax_t100sb12    
 DATABASE:
   MONGO:
     HOST: 0.0.0.0
@@ -12,5 +18,7 @@ DATABASE:
     collections:
       - esg
   QDRANT:
-    HOST: 0.0.0.0
+    HOST: 36.177.80.34.bc.googleusercontent.com
     PORT: 6333
+    API_KEY: ebcE2CRagw2mYS-aI3bkUjdqH2Mp5FivMEtXeyd9QZ7myP8B9tY1ZA
+    collections: esg
