@@ -21,7 +21,7 @@ class QdrantDBWrapper:
         self.PORT = self.config["QDRANT"]["PORT"]
         self.API_KEY = self.config["QDRANT"]["API_KEY"]
         QDRANT_URI = os.environ.get("QDRANT_URI", f"{self.HOST}:{self.PORT}")
-        self.CONNECT_URI = f"http://{QDRANT_URI}"
+        self.CONNECT_URI = f"https://{QDRANT_URI}"
         self.client = QdrantClient(url=self.CONNECT_URI,  api_key=self.API_KEY)
         print(f"CONNECT_URI: {self.CONNECT_URI}")
         logger.info(f"CONNECT_URI: {self.CONNECT_URI}")
