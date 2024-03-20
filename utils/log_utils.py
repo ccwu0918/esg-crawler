@@ -12,7 +12,7 @@ def log_setting(
     log_folder = log_folder if log_folder.startswith("logs-") else "logs-" + log_folder
     log_filepath = os.path.join(
         Path(__file__).resolve().parent,
-        log_folder,
+        "../"+log_folder,
         f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
     )
     Path(log_filepath).parent.mkdir(parents=True, exist_ok=True)
