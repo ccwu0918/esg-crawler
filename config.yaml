@@ -18,7 +18,7 @@ DATABASE:
     collections:
       - esg
   QDRANT:
-    HOST: 36.177.80.34.bc.googleusercontent.com
+    HOST: d7da3d68-8147-47a5-94b9-53e17a664d82.us-east4-0.gcp.cloud.qdrant.io
     PORT: 6333
     API_KEY: ebcE2CRagw2mYS-aI3bkUjdqH2Mp5FivMEtXeyd9QZ7myP8B9tY1ZA
     collections: esg
