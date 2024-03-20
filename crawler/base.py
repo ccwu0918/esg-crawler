@@ -5,18 +5,19 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from tqdm import tqdm
 from pathlib import Path
-import pandas as pd
 import os
 import time
 import urllib.parse
 import sys
+import pandas as pd
+import numpy as np
 
 sys.path.append(str(Path(__file__).absolute().parents[1]))
 
 from utils.qdrant_utils import QdrantDBWrapper
 from utils.data_utils import read_data, save_data, hash_string_to_ID
 from utils.log_utils import logger
-from utils.curation_utils import to_embeddings
+from utils.curation_utils import to_embeddings, to_openai_embeddings
 
 
 class BaseCrawler:
@@ -29,8 +30,9 @@ class BaseCrawler:
     DEFAULT_RETRY = 3
     DEFAULT_WAIT_SECONDS = 1
 
-    def __init__(self, url_name: str):
+    def __init__(self, url_name):
         self.url_name = url_name
+        self.DEFAULT_COLLECTION_NAME = url_name
         self.urls = self.SITE_CONFIG["WEBSITE"][self.url_name]
 
     def _get_domain(self, url: str):
@@ -50,6 +52,7 @@ class BaseCrawler:
             elif method == "post":
                 res = requests.post(url, **param_kwargs).content
             soup = BeautifulSoup(res, parser)
+            self.DEFAULT_WAIT_SECONDS = int(np.random.randint(3, 5))
             time.sleep(self.DEFAULT_WAIT_SECONDS)
             retry += 1
         return soup
@@ -78,15 +81,23 @@ class BaseCrawler:
         return kwargs
 
     def document_store(self, data):
-        data["full_text"] = data.apply(
-            lambda row: f'{row["year"]}\n{row["co_id"]}\n{row["content"]}', axis=1
+        esg_datas = pd.DataFrame(data)      
+        save_data(data=esg_datas, path=f"{self.DATA_DIR}/esg_employee_benefits_datas.csv")
+        years = data["year"][0]                        
+        save_data(data=esg_datas, path=f"{self.DATA_DIR}/esg_employee_benefits-{years}_datas.csv")        
+        datas = {}
+        datas["full_text"] = data.apply(
+            # lambda row: f'{row["year"]}\n{row["co_id"]}\n{row["content"]}', axis=1
+            lambda row: f'{row["year"]}\n{row["co_id"]}\n{row["company_name"]}\n{row["industry"]}\n{row["content"]}', axis=1
         )
         logger.info(f'storing {data} ...')
-        embeddings = to_embeddings(data["full_text"].tolist())
+        # to_embeddings
+        embeddings = to_openai_embeddings(datas["full_text"].tolist())
         qdrant = QdrantDBWrapper()
         qdrant.upsert(
             collection_name=self.DEFAULT_COLLECTION_NAME, data=data, embeddings=embeddings,
         )
+        
 
     def failed_urls_store(self, new_failed_urls: list):
         path = f"{self.DATA_DIR}/failed_urls.csv"
