@@ -62,7 +62,7 @@ def save_data(data: Any, path: str) -> None:
                 f.write(_d)
                 f.write("\n")
     elif path.endswith(".csv"):
-        data.to_csv(path, index=False)
+        data.to_csv(path, index=False) # data.to_csv(path, mode='a', header=False, index=False)
     elif path.endswith(".ndjson"):
         data.to_json(path, lines=True, orient="records")
     elif path.endswith(".ndjson.gz"):
